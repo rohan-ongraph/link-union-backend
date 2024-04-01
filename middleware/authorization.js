@@ -9,7 +9,7 @@ const authorize = (req, res, next) => {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    jwt.verify(token, 'sjoejf1562sfjoe#', (err, user) => {
+    jwt.verify(token, process.env.TOKEN_SECRET_KEY, (err, user) => {
       if (err) {
         return res.status(403).json({ message: 'Forbidden' });
       }
