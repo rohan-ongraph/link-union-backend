@@ -11,7 +11,7 @@ const { contactUs, getUserById, deleteUserAndAssociatedLinks } = require("../con
 userRouter.get("/:id", authorize,  getUserById);
 
 // Route for deleting a user and associated links
-userRouter.delete("/:id", authorize, deleteUserAndAssociatedLinks);
+userRouter.delete("/:id/delete", authorize, deleteUserAndAssociatedLinks);
 
 // Route for sending any feedback using contact form
 userRouter.post('/:userId/contact', authorize, contactUs);
