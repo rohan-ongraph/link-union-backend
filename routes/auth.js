@@ -3,7 +3,6 @@ const router = express.Router();
 
 // Acquiring functions from auth controller
 const { registerUser, loginUser, logoutUser } = require("../controllers/authController");
-const { authorize } = require("../middleware/authorization");
 
 // Creating a new user
 router.post("/register", registerUser);
@@ -12,6 +11,6 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 // Route for logging out a user
-router.get("/logout", authorize, logoutUser);
+router.get("/logout", logoutUser);
 
 module.exports = router;
