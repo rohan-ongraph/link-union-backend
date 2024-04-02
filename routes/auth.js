@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // Acquiring functions from auth controller
-const { registerUser, loginUser, logoutUser } = require("../controllers/authController");
+const { registerUser, loginUser } = require("../controllers/authController");
 
 // Creating a new user
 router.post("/register", registerUser);
