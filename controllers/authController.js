@@ -66,7 +66,7 @@ const loginUser = async (req, res) => {
     const cookieOptions = {
       httpOnly: true,
       secure: true, 
-      domain: "localhost",
+      // domain: "localhost",
       sameSite: 'None', // Set SameSite to None
       path: "/",
     };
