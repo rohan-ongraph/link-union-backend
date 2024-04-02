@@ -81,17 +81,17 @@ const loginUser = async (req, res) => {
   }
 };
 
-const logoutUser = async(req, res) => {
-  try {
-    // Clear the token cookie by setting its expiration date to a past date
-    res.clearCookie('token', { sameSite: 'None', secure: true});
+// const logoutUser = async(req, res) => {
+//   try {
+//     // Clear the token cookie by setting its expiration date to a past date
+//     res.clearCookie('token', { sameSite: 'None', secure: true});
   
-    // Send response with instructions to clear session storage
-    res.status(200).json({ clearSessionStorage: true, message: 'Logout successful' });
-  } catch (error) {
-    res.status(500).json({message: "Internal server error"});
-  }
-}
+//     // Send response with instructions to clear session storage
+//     res.status(200).json({ clearSessionStorage: true, message: 'Logout successful' });
+//   } catch (error) {
+//     res.status(500).json({message: "Internal server error"});
+//   }
+// }
 
 module.exports = {
   registerUser,

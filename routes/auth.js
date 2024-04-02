@@ -11,6 +11,6 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 // Route for logging out a user
-router.get("/logout", logoutUser);
+// router.get("/logout", logoutUser);
 
 module.exports = router;
