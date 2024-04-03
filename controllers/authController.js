@@ -71,7 +71,7 @@ const loginUser = async (req, res) => {
     // Set token in a cookie
     res.cookie("token", token, cookieOptions); // Store the token in an HTTP-only cookie
 
-    res.status(200).json({ message: "Login successful", token });
+    res.status(200).json({ message: "Login successful" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
