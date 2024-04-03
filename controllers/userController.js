@@ -5,7 +5,7 @@ const contactModel = require("../models/contact");
 
 const getUserById = async function (req, res) {
   try {
-    const userId = req.params.id;
+    const userId = req.params.userId;
     // Check if the user exists
     const user = await userModel.findById(userId).populate("links");
     if (!user) {
@@ -19,9 +19,9 @@ const getUserById = async function (req, res) {
   }
 };
 
-const deleteUserAndAssociatedLinks = async (req, res) => {
+const deleteUserAndAssociatedLinks = async function (req, res) {
   try {
-    const userId = req.params.id;
+    const userId = req.params.userId;
 
     // Find the user by ID
     const user = await userModel.findById(userId);
@@ -33,7 +33,7 @@ const deleteUserAndAssociatedLinks = async (req, res) => {
     await linkModel.deleteMany({ _id: { $in: user.links } });
 
     // Delete the user
-    await user.delete();
+    await userModel.findByIdAndDelete(userId);
 
     res
       .status(200)
@@ -44,7 +44,7 @@ const deleteUserAndAssociatedLinks = async (req, res) => {
   }
 };
 
-const contactUs = async (req, res) => {
+const contactUs = async function (req, res) {
   try {
     const userId = req.params.userId; // Correct parameter name is userId, not id
     // Check if the user exists
