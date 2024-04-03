@@ -21,9 +21,8 @@ const createNewLink = async (req, res) => {
   
       res
         .status(201)
-        .json({ message: "Link created successfully", link: newLink });
+        .json({ message: "Link created successfully" });
     } catch (error) {
-      // console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -39,7 +38,6 @@ const createNewLink = async (req, res) => {
   
       res.json(link);
     } catch (error) {
-      // console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -55,7 +53,6 @@ const getAllLinks = async (req, res) => {
   
       res.json(user.links);
     } catch (error) {
-      // console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -83,7 +80,6 @@ const getAllLinks = async (req, res) => {
 
       res.status(200).json({ message: "Link deleted successfully" });
     } catch (error) {
-      // console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -107,7 +103,6 @@ const getAllLinks = async (req, res) => {
   
       res.status(200).json({ message: "All links deleted successfully" });
     } catch (error) {
-      // console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -144,7 +139,6 @@ const getAllLinks = async (req, res) => {
         .status(200)
         .json({ message: "Link updated successfully", link: updatedLink });
     } catch (error) {
-      // console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }

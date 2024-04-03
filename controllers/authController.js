@@ -27,11 +27,9 @@ const registerUser = async (req, res) => {
 
     // Save the new user to the database
     await newUser.save();
-    // console.log(newUser);
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    // console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -66,7 +64,6 @@ const loginUser = async (req, res) => {
     const cookieOptions = {
       httpOnly: true,
       secure: true, 
-      // domain: "localhost",
       sameSite: 'None', // Set SameSite to None
       path: "/",
     };
@@ -76,22 +73,9 @@ const loginUser = async (req, res) => {
 
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
-    // console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-// const logoutUser = async(req, res) => {
-//   try {
-//     // Clear the token cookie by setting its expiration date to a past date
-//     res.clearCookie('token', { sameSite: 'None', secure: true});
-  
-//     // Send response with instructions to clear session storage
-//     res.status(200).json({ clearSessionStorage: true, message: 'Logout successful' });
-//   } catch (error) {
-//     res.status(500).json({message: "Internal server error"});
-//   }
-// }
 
 module.exports = {
   registerUser,

@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const authorize = (req, res, next) => {
   try {
     const token = req.cookies.token;
-    // console.log(token)
 
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized' });
@@ -17,7 +16,6 @@ const authorize = (req, res, next) => {
       next();
     });
   } catch (error) {
-    // console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
