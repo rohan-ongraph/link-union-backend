@@ -6,6 +6,7 @@ const cors = require("cors");
 const dotenv = require('dotenv');
 const userRouter = require("./routes/users");
 const linkRouter = require("./routes/links");
+const passport = require('./passport-config');
 dotenv.config();
 
 //variables
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 5000;
 
 //connection
 setConnection(url);
+app.use(passport.initialize());
 
 //middlewares
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
