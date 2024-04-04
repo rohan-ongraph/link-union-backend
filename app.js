@@ -19,7 +19,7 @@ setConnection(url);
 app.use(passport.initialize());
 
 //middlewares
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ origin: 'https://link-union.netlify.app', credentials: true }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
