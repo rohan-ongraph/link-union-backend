@@ -94,12 +94,12 @@ const getAllLinks = async (req, res) => {
         return res.status(404).json({ message: "User not found" });
       }
   
+      // Delete all links associated with the user from the linkModel
+      await linkModel.deleteMany({ _id: { $in: user.links } });
+      
       // Clear the user's links array
       user.links = [];
       await user.save();
-  
-      // Delete all links associated with the user from the linkModel
-      await linkModel.deleteMany({ _id: { $in: user.links } });
   
       res.status(200).json({ message: "All links deleted successfully" });
     } catch (error) {
