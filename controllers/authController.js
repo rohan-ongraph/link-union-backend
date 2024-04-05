@@ -61,6 +61,7 @@ const loginUser = async (req, res) => {
       process.env.TOKEN_SECRET_KEY
     );
 
+    // Set cookie options
     const cookieOptions = {
       httpOnly: true,
       secure: true, 
