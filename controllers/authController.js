@@ -78,45 +78,46 @@ const loginUser = async (req, res) => {
   }
 };
 
-async function googleStrategy(_, _, _, profile, done) {
-  try {
-    // Find or create a user based on the email retrieved from Google profile
-    let user = await userModel.findOne({ email: profile.email });
+// // Google login/sign up strategy
+// async function googleStrategy(_, _, _, profile, done) {
+//   try {
+//     // Find or create a user based on the email retrieved from Google profile
+//     let user = await userModel.findOne({ email: profile.email });
 
-    if (!user) {
-      // If the user does not exist, create a new user using the Google email
-      const newUser = new userModel({
-        email: profile.email,
-        fullname: profile.displayName,
-      });
-      user = await newUser.save();
-    }
+//     if (!user) {
+//       // If the user does not exist, create a new user using the Google email
+//       const newUser = new userModel({
+//         email: profile.email,
+//         fullname: profile.displayName,
+//       });
+//       user = await newUser.save();
+//     }
 
-    // Generate JWT token for authentication
-    const token = jwt.sign(
-      {
-        userId: user._id,
-        email: user.email,
-        fullname: user.fullname,
-      },
-      process.env.TOKEN_SECRET_KEY
-    );
+//     // Generate JWT token for authentication
+//     const token = jwt.sign(
+//       {
+//         userId: user._id,
+//         email: user.email,
+//         fullname: user.fullname,
+//       },
+//       process.env.TOKEN_SECRET_KEY
+//     );
 
-    // Set token as a cookie
-    const cookieOptions = {
-      httpOnly: true,
-      secure: true, // Set to true if using HTTPS
-      sameSite: 'None', // Set SameSite to None if using cross-site requests
-      path: '/', // Set the cookie path
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Cookie expiration time
-    };
-    res.cookie('token', token, cookieOptions);
+//     // Set token as a cookie
+//     const cookieOptions = {
+//       httpOnly: true,
+//       secure: true, // Set to true if using HTTPS
+//       sameSite: 'None', // Set SameSite to None if using cross-site requests
+//       path: '/', // Set the cookie path
+//       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Cookie expiration time
+//     };
+//     res.cookie('token', token, cookieOptions);
 
-    done(null, token); // Pass the token to the done callback
-  } catch (error) {
-    done(error); // Pass any errors to the done callback
-  }
-};
+//     done(null, token); // Pass the token to the done callback
+//   } catch (error) {
+//     done(error); // Pass any errors to the done callback
+//   }
+// };
 
 module.exports = {
   registerUser,

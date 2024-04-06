@@ -16,13 +16,13 @@ router.get('/auth/google',
   passport.authenticate('google', { scope: ['email', 'profile'] })
 );
 
-// Google callback route
-router.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home or send response with token
-    res.redirect('/');
-  }
-);
+// // Google callback route
+// router.get('/auth/google/callback',
+//   passport.authenticate('google', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     // Successful authentication, redirect home or send response with token
+//     res.redirect('/');
+//   }
+// );
 
 module.exports = router;

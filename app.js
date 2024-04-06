@@ -7,8 +7,9 @@ const cors = require("cors"); // Middleware for enabling CORS (Cross-Origin Reso
 const dotenv = require('dotenv'); // Module for loading environment variables from a .env file
 const userRouter = require("./routes/users"); // Importing router for user-related routes
 const linkRouter = require("./routes/links"); // Importing router for link-related routes
-const passport = require('./passport-config'); // Importing passport configuration for authentication
 dotenv.config(); // Loading environment variables from .env file
+
+// const passport = require('./passport-config'); // Importing passport configuration for authentication
 
 // Retrieving MongoDB cluster URL from environment variables
 const url = process.env.MONGO_DB_CLUSTER_URL;
