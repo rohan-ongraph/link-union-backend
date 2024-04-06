@@ -24,7 +24,7 @@ const PORT = process.env.PORT || 5000;
 setConnection(url);
 
 // Initializing passport for authentication
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
 // Middleware setup
 app.use(cors()); // Enabling CORS for all routes
