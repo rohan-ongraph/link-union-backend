@@ -39,9 +39,15 @@ To install Link Union locally, follow these steps:
 
 To run the Link Union backend locally, follow these steps:
 
-1. Clone the repository: `git clone <repository-url>`
-2. Navigate to the project directory: `cd link-union`
-3. Install dependencies: `npm install`
+1. Clone the repository 
+2. Navigate to the project directory 
+3. Install dependencies 
+
+```git
+git clone <repository-url>
+cd link-union
+npm install
+```
 4. Create a `.env` file in the root directory and add the necessary environment variables:
 
 ```plaintext
@@ -50,24 +56,33 @@ TOKEN_SECRET_KEY=<your-secret-key>
 ```
 
 1. Ensure MongoDB is installed and running locally or provide the URL for MongoDB Atlas cluster in the `.env` file.
-2. Start the server using the following command: `npm start`
+2. Start the server using the following command
+
+```bash
+npm start #starting the server
+```
 3. The server will start running locally on port 5000 by default. You can access the endpoints using an API testing tool like Postman or via frontend integration.
 
 ### Deploy on Render
 
 Link Union is deployed on Render as a web service. Follow these steps to deploy:
 
-1. Build the Angular application using `ng build`.
-2. Navigate to the build directory: `cd dist/link-union`.
+1. Build the Angular application
+2. Navigate to the build directory
+
+```bash
+ng build #build angular application
+cd dist/link-union #navigate to directory
+```
 3. Create a new file named `render.yaml` and add the following configuration:
 
-   ```yaml
+ ```yaml
    services:
    - name: link-union
      type: web
      buildCommand: npm install && npm run build
      startCommand: npm start
-    ```
+```
 Create a new Render account if you haven't already.
 Add a new web service on Render and specify the GitHub repository where your Link Union code is hosted.
 Deploy the service on Render.
@@ -121,13 +136,6 @@ Deploy the service on Render.
 ## Middleware
 
 - **Authorization Middleware**: `authorize` middleware function to verify JWT tokens and authenticate users.
-
-## Setting Up Development Environment
-
-1. Clone the repository: `git clone <repository-url>`
-2. Install dependencies: `npm install`
-3. Set up environment variables in a `.env` file.
-4. Run the backend server: `npm start`
 
 ## Testing
 
