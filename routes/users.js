@@ -8,7 +8,7 @@ const { authorize } = require("../middleware/authorization");
 const { contactUs, getUserById, deleteUserAndAssociatedLinks } = require("../controllers/userController");
 
 // Fetching all record of a user based on their Id
-userRouter.get("/:userId", authorize,  getUserById);
+userRouter.get("/:userId", authorize, getUserById);
 
 // Route for deleting a user and associated links
 userRouter.delete("/:userId/delete", authorize, deleteUserAndAssociatedLinks);

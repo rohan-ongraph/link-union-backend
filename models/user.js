@@ -12,11 +12,7 @@ const userSchema = new Schema({
     },
     password: {
         type: String
-    },
-    links: [{
-        type: Schema.Types.ObjectId,
-        ref: 'link'
-    }]
+    }
 });
 
 const userModel = model('user', userSchema);

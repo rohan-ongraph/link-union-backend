@@ -1,6 +1,11 @@
 const { Schema, model } = require("mongoose");
 
 const linkSchema = new Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+    },
     name: {
         type: String,
         required: true

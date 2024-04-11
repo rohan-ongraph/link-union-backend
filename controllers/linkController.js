@@ -4,38 +4,34 @@ const linkModel = require("../models/link");
 
 // Function to create a new link for a user
 const createNewLink = async (req, res) => {
-    try {
+  try {
       // Extracting userId from request parameters
       const userId = req.params.userId;
-      
+
       // Check if the user exists
       let user = await userModel.findById(userId);
       if (!user) {
-        return res.status(404).json({ message: "User not found" });
+          return res.status(404).json({ message: "User not found" });
       }
-  
+
       // Extracting link details from request body
       const { name, link, desc, tags } = req.body;
-      
-      // Creating a new link instance
-      const newLink = new linkModel({ name, link, desc, tags });
-      
+
+      // Creating a new link instance associated with the user
+      const newLink = new linkModel({ userId, name, link, desc, tags });
+
       // Saving the new link
       await newLink.save();
-  
-      // Adding the new link's ID to the user's links array
-      user.links.push(newLink._id);
-      await user.save();
-  
+
       // Responding with success message
-      res
-        .status(201)
-        .json({ message: "Link created successfully" });
-    } catch (error) {
+      res.status(201).json({ message: "Link created successfully" });
+  } catch (error) {
       // Handling any internal server error
+      console.error("Error creating link:", error);
       res.status(500).json({ message: "Internal server error" });
-    }
-}
+  }
+};
+
 
 // Function to retrieve a single link
 const getLink = async (req, res) => {
@@ -66,15 +62,17 @@ const getAllLinks = async (req, res) => {
       const userId = req.params.userId;
       
       // Finding the user by ID and populating its 'links' field
-      const user = await userModel.findById(userId).populate("links");
+      const user = await userModel.findById(userId);
       
       // If user not found, respond with 404 status and message
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
+
+      const allLinks = await linkModel.find({userId: userId})
   
       // Responding with all links associated with the user
-      res.json(user.links);
+      res.json(allLinks);
     } catch (error) {
       // Handling any internal server error
       res.status(500).json({ message: "Internal server error" });
@@ -94,10 +92,6 @@ const deleteLink = async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-
-      // Removing the link ID from the user's 'links' array
-      user.links.pull(linkId);
-      await user.save();
 
       // Deleting the link from the linkModel
       const deletedLink = await linkModel.findByIdAndDelete(linkId);
@@ -128,12 +122,8 @@ const deleteAllLinks = async (req, res) => {
       }
   
       // Deleting all links associated with the user from the linkModel
-      await linkModel.deleteMany({ _id: { $in: user.links } });
-      
-      // Clearing the user's 'links' array
-      user.links = [];
-      await user.save();
-  
+      await linkModel.deleteMany({ userId: userId });
+
       // Responding with success message
       res.status(200).json({ message: "All links deleted successfully" });
     } catch (error) {
@@ -154,11 +144,6 @@ const editLink = async (req, res) => {
       // If user not found, respond with 404 status and message
       if (!user) {
         return res.status(404).json({ message: "User not found" });
-      }
-  
-      // Checking if the link belongs to the user
-      if (!user.links.includes(linkId)) {
-        return res.status(404).json({ message: "Link not found for the user" });
       }
   
       // Updating the link details
