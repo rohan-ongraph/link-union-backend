@@ -23,7 +23,7 @@ setConnection(url);
 
 // Middleware setup
 const corsOptions = {
-  origin: "https://link-union.netlify.app/",
+  origin: "https://link-union.netlify.app",
 };
 
 app.use(cors(corsOptions));
