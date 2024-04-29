@@ -21,7 +21,7 @@ linkRouter.post("/:userId/add-link", authorize, createNewLink);
 linkRouter.get("/:userId/links/:linkId", authorize, getLink);
 
 // Route for fetching all links of a specific user
-linkRouter.get("/:userId/links", authorize, getAllLinks);
+linkRouter.get("/:userId/links",  getAllLinks);
 
 // Route for deleting a link
 linkRouter.delete("/:userId/delete-link/:linkId", authorize, deleteLink);

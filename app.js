@@ -9,8 +9,6 @@ const userRouter = require("./routes/users"); // Importing router for user-relat
 const linkRouter = require("./routes/links"); // Importing router for link-related routes
 dotenv.config(); // Loading environment variables from .env file
 
-// const passport = require('./passport-config'); // Importing passport configuration for authentication
-
 // Retrieving MongoDB cluster URL from environment variables
 const url = process.env.MONGO_DB_CLUSTER_URL;
 
@@ -23,11 +21,8 @@ const PORT = process.env.PORT || 5000;
 // Establishing connection to MongoDB
 setConnection(url);
 
-// Initializing passport for authentication
-// app.use(passport.initialize());
-
 // Middleware setup
-app.use(cors()); // Enabling CORS for all routes
+app.use(cors());// Enabling CORS for all routes
 app.use(express.urlencoded({ extended: false })); // Middleware for parsing URL-encoded request bodies
 app.use(express.json()); // Middleware for parsing JSON request bodies
 app.use(cookieParser()); // Middleware for parsing cookies

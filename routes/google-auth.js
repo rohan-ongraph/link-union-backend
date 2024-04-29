@@ -1,26 +1,15 @@
-const express = require("express");
-const router = express.Router();
-const passport = require("passport")
+// Import necessary modules
+const express = require('express');
+const passport = require('passport');
 const session = require('express-session');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const userModel = require("../models/user");
-const jwt = require("jsonwebtoken");
-const dotenv = require('dotenv'); 
+const dotenv = require('dotenv'); // Module for loading environment variables from a .env file
 dotenv.config();
-
-// Acquiring functions from auth controller
-const { registerUser, loginUser } = require("../controllers/authController");
-
-// Creating a new user
-router.post("/register", registerUser);
-
-// Route for user login
-router.post("/login", loginUser);
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://localhost:5000/auth/google/callback'
+    callbackURL: '/auth/google/callback'
   },
   function(accessToken, refreshToken, profile, done) {
     // Check if the user already exists in your database
@@ -30,6 +19,9 @@ passport.use(new GoogleStrategy({
     return done(null, profile);
   }
 ));
+
+// Create an Express router
+const googleRouter = express.Router();
 
 // Serialize and deserialize user
 passport.serializeUser((user, done) => {
@@ -41,26 +33,25 @@ passport.deserializeUser((user, done) => {
 });
 
 // Setup session middleware
-router.use(session({
+googleRouter.use(session({
   resave: false,
   saveUninitialized: true,
   secret: 'SECRET',
   cookie: { secure: false }
 }));
 
-router.use(passport.initialize());
-router.use(passport.session());
 // Initialize passport middleware
+googleRouter.use(passport.initialize());
+googleRouter.use(passport.session());
 
 // Google OAuth route for login
-router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+googleRouter.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // Google OAuth callback route
-router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async(req, res) => {
-  console.log("inside callback")
-  // process.exit();
-  res.redirect('http://localhost:4200/list'); // Redirect to your Angular app
+googleRouter.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+  // Redirect or respond with user data/token
+  res.redirect('/profile');
 });
 
 // Export the router
-module.exports = router;
+module.exports = googleRouter;
