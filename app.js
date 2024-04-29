@@ -22,10 +22,15 @@ const PORT = process.env.PORT || 5000;
 setConnection(url);
 
 // Middleware setup
-app.use(cors(
-  origin = "https://link-union.netlify.app/",
-  methods = "GET,PUT,POST,DELETE"
-));// Enabling CORS for all routes
+const express = require("express");
+const cors = require("cors");
+
+const corsOptions = {
+  origin: "https://link-union.netlify.app/",
+};
+
+app.use(cors(corsOptions));
+// Enabling CORS for all routes
 app.use(express.urlencoded({ extended: false })); // Middleware for parsing URL-encoded request bodies
 app.use(express.json()); // Middleware for parsing JSON request bodies
 app.use(cookieParser()); // Middleware for parsing cookies
