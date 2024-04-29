@@ -22,9 +22,6 @@ const PORT = process.env.PORT || 5000;
 setConnection(url);
 
 // Middleware setup
-const express = require("express");
-const cors = require("cors");
-
 const corsOptions = {
   origin: "https://link-union.netlify.app/",
 };
