@@ -22,7 +22,10 @@ const PORT = process.env.PORT || 5000;
 setConnection(url);
 
 // Middleware setup
-app.use(cors());// Enabling CORS for all routes
+app.use(cors(
+  origin = "*",
+  methods = "GET,PUT,POST,DELETE"
+));// Enabling CORS for all routes
 app.use(express.urlencoded({ extended: false })); // Middleware for parsing URL-encoded request bodies
 app.use(express.json()); // Middleware for parsing JSON request bodies
 app.use(cookieParser()); // Middleware for parsing cookies
