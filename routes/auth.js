@@ -20,7 +20,7 @@ router.post("/login", loginUser);
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://localhost:5000/auth/google/callback'
+    callbackURL: 'https://link-union-backend.onrender.com/auth/google/callback'
   },
   function(accessToken, refreshToken, profile, done) {
     // Check if the user already exists in your database
@@ -59,7 +59,7 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] 
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async(req, res) => {
   console.log("inside callback")
   // process.exit();
-  res.redirect('http://localhost:4200/list'); // Redirect to your Angular app
+  res.redirect('https://link-union.netlify.app/list'); // Redirect to your Angular app
 });
 
 // Export the router
