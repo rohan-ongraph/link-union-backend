@@ -23,7 +23,7 @@ setConnection(url);
 
 // Middleware setup
 app.use(cors(
-  origin = "*",
+  origin = "https://link-union.netlify.app/",
   methods = "GET,PUT,POST,DELETE"
 ));// Enabling CORS for all routes
 app.use(express.urlencoded({ extended: false })); // Middleware for parsing URL-encoded request bodies
