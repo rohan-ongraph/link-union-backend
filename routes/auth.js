@@ -20,7 +20,7 @@ router.post("/login", loginUser);
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'https://link-union-backend.onrender.com/auth/google/callback'
+    callbackURL: 'http://localhost:5000/auth/google/callback'
   },
   function(accessToken, refreshToken, profile, done) {
     // Check if the user already exists in your database
@@ -53,13 +53,49 @@ router.use(passport.session());
 // Initialize passport middleware
 
 // Google OAuth route for login
-router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // Google OAuth callback route
-router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async(req, res) => {
-  console.log("inside callback")
-  // process.exit();
-  res.redirect('https://link-union.netlify.app/list'); // Redirect to your Angular app
+router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async (req, res) => {
+  try {
+      // Extract user information from the request      
+      const { displayName, emails } = req.user;
+      const email = emails[0].value;
+
+      // Check if the user already exists in your database
+      let user = await userModel.findOne({ email });
+
+      if (!user) {
+          // If the user doesn't exist, create a new user in the database
+          user = new userModel({
+              fullname: displayName,
+              email,
+              // You can set a default password or leave it blank as per your requirements
+          });
+          await user.save();
+      }
+
+      const token = jwt.sign(
+        {
+            userId: user._id,
+            email: user.email,
+            fullname: user.fullname,
+        },
+        process.env.TOKEN_SECRET_KEY
+    );
+
+    // Set token in a cookie
+    res.cookie("token", token); // Store the token in an HTTP-only cookie
+
+    // Redirect to your Angular app after successful authentication
+    res.redirect(`http://localhost:4200/list`);
+
+    
+  } catch (error) {
+      // Handle any errors that occur during the process
+      console.error("Error handling Google authentication callback:", error);
+      res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 // Export the router

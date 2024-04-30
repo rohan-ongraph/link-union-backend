@@ -21,13 +21,8 @@ const PORT = process.env.PORT || 5000;
 // Establishing connection to MongoDB
 setConnection(url);
 
-// Middleware setup
-const corsOptions = {
-  origin: "https://link-union.netlify.app",
-};
+app.use(cors()); // Enabling CORS for all routes
 
-app.use(cors(corsOptions));
-// Enabling CORS for all routes
 app.use(express.urlencoded({ extended: false })); // Middleware for parsing URL-encoded request bodies
 app.use(express.json()); // Middleware for parsing JSON request bodies
 app.use(cookieParser()); // Middleware for parsing cookies
