@@ -23,10 +23,7 @@ passport.use(new GoogleStrategy({
     callbackURL: 'http://localhost:5000/auth/google/callback'
   },
   function(accessToken, refreshToken, profile, done) {
-    // Check if the user already exists in your database
-    // If they do, return the user object
-    // If they don't, create a new user and save it to your database
-    // Then return the new user object
+    
     return done(null, profile);
   }
 ));
